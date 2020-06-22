@@ -9,59 +9,74 @@ use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\User;
+use Auth;
+use Carbon;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
-    {
-        /**
-         * key login
-         
-         NO THL, 
-         PASSWORD
-         
-         */
-        $credentials = $request->only('no_thl', 'password');
+    
+    public $successStatus = 200;
 
-        try {
-            if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials', "value"    => 0,], 400);
-            }
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+    public function login(){
+        if(Auth::attempt(['no_thl' => request('no_thl'), 'password' => request('password')])){
+            $user = Auth::user();
+            $success['token'] =  $user->createToken('zar')->accessToken;
+            return response()->json(
+                [
+                    'token'     => $success["token"], 
+                    // 'user'      => $user,
+                    "uid"      => $user->id,
+                    "value"    => 1,
+                    "name"      => $user->name,
+                ]
+                , $this->successStatus
+            );
         }
-
-        $user = User::where("no_thl", $request->no_thl)->first();
-
-        return response()->json(
-            [
-                "uid"      => $user->id,
-                "value"    => 1,
-                "token"     => $token,
-                "name"      => $user->name,
-            ]
-        );
+        else{
+            return response()->json(['error'=>'Unauthorised'], 401);
+        }
     }
 
 
-    public function getAuthenticatedUser()
-    {
-        try {
+        // try {
+        //     if (!$token = JWTAuth::attempt($credentials)) {
+        //         return response()->json(['error' => 'invalid_credentials', "value"    => 0,], 400);
+        //     }
+        // } catch (JWTException $e) {
+        //     return response()->json(['error' => 'could_not_create_token'], 500);
+        // }
 
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+        // $user = User::where("no_thl", $request->no_thl)->first();
 
-            return response()->json(['token_expired'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+        // return response()->json(
+        //     [
+        //         "uid"      => $user->id,
+        //         "value"    => 1,
+        //         "token"     => $token,
+        //         "name"      => $user->name,
+        //     ]
+        // );
 
-            return response()->json(['token_invalid'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
 
-            return response()->json(['token_absent'], $e->getStatusCode());
-        }
 
-        return response()->json(compact('user'));
-    }
+    // public function getAuthenticatedUser()
+    // {
+    //     try {
+
+    //         if (!$user = JWTAuth::parseToken()->authenticate()) {
+    //             return response()->json(['user_not_found'], 404);
+    //         }
+    //     } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+
+    //         return response()->json(['token_expired'], $e->getStatusCode());
+    //     } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+    //         return response()->json(['token_invalid'], $e->getStatusCode());
+    //     } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+    //         return response()->json(['token_absent'], $e->getStatusCode());
+    //     }
+
+    //     return response()->json(compact('user'));
+    // }
 }
