@@ -3,6 +3,18 @@
 @section('css')
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="{{ asset("assets/daterangepicker.css")}}">
+
+    <style>
+      .img-prev{
+          width: 500px;
+        }
+      @media only screen and (max-width: 800px) {
+        /* For mobile phones: */
+        .img-prev{
+          width: 200px;
+        }
+      }
+    </style>
 @endsection
 
 @section('content')
@@ -45,15 +57,15 @@
               <div class="d-flex justify-content-center">
                 <p class="lead">{{ $kehadiran->user->name }}</p>
               </div>
-              <div class="d-flex justify-content-center my-1">
+              <div class="d-flex justify-content-center">
                 <p class="lead">{{ $kehadiran->user->jabatan }}</p>
               </div>
-              <div class="d-flex justify-content-center my-1">
+              <div class="d-flex justify-content-center">
                 <p class="lead">{{ $kehadiran->time }}</p>
               </div>
                             
               <div class="d-flex justify-content-center my-1">
-                <img src="{{ asset("/storage/presensi/$kehadiran->image") }}" class="w-75" height="auto" alt="">
+                <img src="{{ asset("/storage/presensi/$kehadiran->image") }}" class="img-prev" height="auto" alt="">
               </div>
               <div class="d-flex justify-content-center my-1 ">
                 <p class="lead">Lokasi : {{ $kehadiran->lokasi }}</p>

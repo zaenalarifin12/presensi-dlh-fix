@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 Route::post("/login", "Api\AuthController@login");
 
-Route::group(["middleware" => ["auth"]], function(){
+Route::group(["middleware" => ["auth:api"]], function(){
     Route::post("/presensi", "Api\PresensiController@store");
     Route::post("/lembur",   "Api\PresensiLemburController@store");
 
