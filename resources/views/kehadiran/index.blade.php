@@ -27,18 +27,38 @@
                         <div class="col">
                           <div class="form-group mb-3">
                             <label>Mulai</label>
-                            <input type="text" class="form-control datepicker" name="mulai">
+                            @if (!empty($mulai))
+                              <input type="text" class="form-control datepicker" name="mulai" value="{{ $mulai }}">    
+                            @else
+                              <input type="text" class="form-control datepicker" name="mulai">    
+                            @endif
+                            
                           </div>                    
                           <div class="form-group">
                             <label>Sampai</label>
-                            <input type="text" class="form-control datepicker" name="selesai">
-                          </div>      
+                            @if (!empty($selesai))
+                              <input type="text" class="form-control datepicker" name="selesai" value="{{ $selesai }}">
+                            @else
+                              <input type="text" class="form-control datepicker" name="selesai">
+                            @endif
+                            
+                          </div>  
 
+
+                          
                           <div class="form-group">
                             <label>Tugas</label>
                             <select name="tugas" id="" class="form-control" name="tugas">
                               @foreach ($tugas as $item)
-                                <option value="{{$item->jabatan}}">{{$item->jabatan}}</option>    
+                                @if (!empty($tugas_recent))
+                                  @if ($tugas_recent == $item->jabatan)
+                                    <option selected value="{{$item->jabatan}}">{{$item->jabatan}}</option>    
+                                  @else
+                                    <option value="{{$item->jabatan}}">{{$item->jabatan}}</option>    
+                                  @endif
+                                @else
+                                  <option value="{{$item->jabatan}}">{{$item->jabatan}}</option>    
+                                @endif
                               @endforeach
                             </select>
                           </div>      
@@ -46,8 +66,18 @@
                           <div class="form-group">
                             <label>Jam Waktu</label>
                             <select name="waktu" id="" class="form-control" name="waktu">
-                              <option value="pagi">Pagi</option>
-                              <option value="sore">Sore</option>
+                              @if (!empty($waktu))
+                                @if ($waktu == "pagi")
+                                  <option selected value="pagi">Pagi</option>
+                                  <option value="sore">Sore</option>
+                                @else
+                                  <option value="pagi">Pagi</option>
+                                  <option selected value="sore">Sore</option>
+                                @endif
+                              @else
+                                <option value="pagi">Pagi</option>
+                                <option value="sore">Sore</option>                                  
+                              @endif
                             </select>
                           </div>      
                             <input type="submit" name="action" class="btn btn-primary px-5" value="cari">
@@ -78,7 +108,7 @@
                             $end_date   = $selesai;
 
                             while (strtotime($start_date) <= strtotime($end_date)) {
-                                echo "<th>$start_date</th>";
+                                echo "<th>" . \App\Helper\Helper::tgl_indo( date('Y-m-d', strtotime($start_date)))  . "</th>";
                                 $start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
                             }
                         @endphp   
@@ -104,7 +134,7 @@
                                   $ts    = strtotime($kehadiran->time);
                                   $hasil = date('Y-m-d', $ts);
                                   if ($hasil == $mulai_saya){
-                                    echo "<td>$kehadiran->time</td>";
+                                    echo "<td>" . \App\Helper\Helper::tgl_indo( date('Y-m-d', strtotime($kehadiran->time))) ."</td>";
                                     $mulai_saya = date ("Y-m-d", strtotime("+1 days", strtotime($mulai_saya)));
                                     break;
                                   }

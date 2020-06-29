@@ -61,9 +61,13 @@
                 <p class="lead">{{ $kehadiran->user->jabatan }}</p>
               </div>
               <div class="d-flex justify-content-center">
-                <p class="lead">{{ $kehadiran->time }}</p>
+                <p class="lead">{{ \App\Helper\Helper::tgl_indo( date('Y-m-d', strtotime($kehadiran->time))) }}</p><br>
               </div>
-                            
+                    
+              <div class="d-flex justify-content-center">
+                <p class="lead">{{ date('H:i:s', strtotime($kehadiran->time)) }}</p>
+              </div>
+              
               <div class="d-flex justify-content-center my-1">
                 <img src="{{ asset("/storage/presensi/$kehadiran->image") }}" class="img-prev" height="auto" alt="">
               </div>

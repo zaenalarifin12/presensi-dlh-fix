@@ -79,7 +79,11 @@
             { data : "user.no_thl", name : "user.no_thl"},
             { data : "time"    ,    name : "time"},
             { data : "action"   ,   name : "action" }
-          ]
+          ],
+          "columnDefs": [ {
+            "targets": 5,
+            "orderable": false
+            } ]
         });
     } );
     </script>

@@ -58,12 +58,12 @@
                     <tbody>
                       @foreach ($users as $item)
                         <tr>
-                          <td> 1 </td>
+                          <td> {{ $loop->index + 1  }} </td>
                           <td> {{ $item->no_thl }} </td>
-                          <td> {{ $item->tmt_pengangkatan_pertama }} </td>
+                          <td> {{ \App\Helper\Helper::tgl_indo( date('Y-m-d', strtotime($item->tmt_pengangkatan_pertama)))  }} </td>
                           <td> {{ $item->name }} </td>
                           <td> {{ $item->tempat_lahir }} </td>
-                          <td> {{ $item->tanggal_lahir }} </td>
+                          <td> {{ \App\Helper\Helper::tgl_indo( date('Y-m-d', strtotime($item->tanggal_lahir)))  }} </td>
                           <td> {{ $item->tingkat_pendidikan_terakhir }} </td>
                           <td> {{ $item->jurusan_pendidikan_terakhir }} </td>
                           <td> {{ $item->jabatan }} </td>
@@ -94,7 +94,7 @@
 
 @section('script')
     <!-- Page Specific JS File -->
-    <script src="../assets/js/page/modules-datatables.js"></script>
+    {{-- <script src="{{ asset("assets/js/page/modules-datatables.js")}}"></script> --}}
 
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
