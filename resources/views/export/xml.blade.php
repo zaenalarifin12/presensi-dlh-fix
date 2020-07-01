@@ -95,6 +95,7 @@
                   
                   $ts    = strtotime($kehadiran->time);
                   $hasil = date('Y-m-d', $ts);
+
                   if ($hasil == $mulai_saya):
                       @endphp
                         <td> {{date('H:i:s', strtotime($kehadiran->time))}} </td>

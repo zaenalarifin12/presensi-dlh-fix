@@ -134,12 +134,13 @@
                                   
                                   $ts    = strtotime($kehadiran->time);
                                   $hasil = date('Y-m-d', $ts);
+                                  
                                   if ($hasil == $mulai_saya){
                                     echo "<td>" . date('H:i:s', strtotime($kehadiran->time)) ."</td>";
                                     $mulai_saya = date ("Y-m-d", strtotime("+1 days", strtotime($mulai_saya)));
                                     break;
                                   }
-                                    echo "<td>" .date('H:i:s', strtotime($kehadiran->time)) . "</td>";
+                                    echo "<td></td>";
                                     $mulai_saya = date ("Y-m-d", strtotime("+1 days", strtotime($mulai_saya)));
                                 }
                               @endphp   
