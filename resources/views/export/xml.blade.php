@@ -19,11 +19,12 @@
       </tr>
       <tr>
         <th colspan="2" style="">Mulai Tanggal</th>
-        <th colspan="3" style="">{{ date("d - m - Y", strtotime($mulai)) }}</th>
+        
+        <th colspan="3" style="">{{ \App\Helper\Helper::tgl_indo( date('Y-m-d', strtotime($mulai))) }}</th>
       </tr>
       <tr>
         <th colspan="2" style="">Sampai Tanggal</th>
-        <th colspan="3" style="">{{ date("d - m - Y", strtotime($selesai)) }}</th>
+        <th colspan="3" style="">{{ \App\Helper\Helper::tgl_indo( date('Y-m-d', strtotime($selesai))) }}</th>
       </tr>
 
       <tr>
@@ -61,14 +62,17 @@
       <tr>
         <th></th>
         <th></th>
+        
         @php
             $start_date = $mulai;
             $end_date   = $selesai;
-
-            while (strtotime($start_date) <= strtotime($end_date)) {
-                echo "<th>$start_date</th>";
+        
+            while (strtotime($start_date) <= strtotime($end_date)):
+            @endphp   
+                <th> {{ \App\Helper\Helper::tgl_indo( date('Y-m-d', strtotime($start_date))) }} </th>
+            @php
                 $start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
-            }
+            endwhile;
         @endphp   
       </tr>
     </thead>
@@ -87,18 +91,20 @@
 
           @foreach ($item->kehadirans as $kehadiran)
               @php
-                while (strtotime($mulai_saya) <= strtotime($end_date)) {
+                while (strtotime($mulai_saya) <= strtotime($end_date)):
                   
                   $ts    = strtotime($kehadiran->time);
                   $hasil = date('Y-m-d', $ts);
-                  if ($hasil == $mulai_saya){
-                    echo "<td>$kehadiran->time</td>";
-                    $mulai_saya = date ("Y-m-d", strtotime("+1 days", strtotime($mulai_saya)));
-                    break;
-                  }
+                  if ($hasil == $mulai_saya):
+                      @endphp
+                        <td> {{date('H:i:s', strtotime($kehadiran->time))}} </td>
+                      @php
+                      $mulai_saya = date ("Y-m-d", strtotime("+1 days", strtotime($mulai_saya)));
+                      break;
+                  endif;
                     echo "<td></td>";
                     $mulai_saya = date ("Y-m-d", strtotime("+1 days", strtotime($mulai_saya)));
-                }
+                endwhile;
               @endphp   
           @endforeach
         </tr>

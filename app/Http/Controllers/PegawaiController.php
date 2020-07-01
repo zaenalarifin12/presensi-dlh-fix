@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\User;
 
 class PegawaiController extends Controller
 {
@@ -101,5 +103,24 @@ class PegawaiController extends Controller
         $user->delete();
 
         return redirect("/pegawai")->with("msg", "Pegawai berhasil di hapus");
+    }
+
+    // ===============  IMPORT USER VIA EXCEL
+    public function import(Request $request)
+    {
+        
+        $this->validate($request, [
+            "file" => "required|mimes:xlsx, xls"
+        ]);
+
+        $file = $request->file('file');
+
+        $nama_file = rand().$file->getClientOriginalName();
+        
+        $file->move("file_pegawai", $nama_file);
+        
+        Excel::import(new UsersImport, public_path("/file_pegawai/". $nama_file));
+        
+        return redirect("/pegawai")->with("msg", "Data pegawai berhasil di import");
     }
 }

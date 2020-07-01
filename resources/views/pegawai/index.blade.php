@@ -32,8 +32,23 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4>Daftar Pegawai</h4>
-              <a href="{{ url("pegawai/create") }}" class="btn btn-info px-5 pull-right">Tambah</a>
+              <div class="container">
+                <div class="row">
+                <h4>Daftar Pegawai</h4>
+              </div>
+              <div class="row">
+                <a href="{{ url("pegawai/create") }}" class="btn btn-info px-5 pull-right mr-3">Tambah</a>
+              
+                <form action="{{ url("/pegawai/import") }}" method="post" enctype="multipart/form-data">
+                  <input type="file" name="file" id="" required accept=".xls, .xlsx">
+                  {{ csrf_field() }}
+                  <button type="submit" class="btn btn-outline-success">Import</button>
+                </form>
+              </div>
+              <div class="row mt-4">
+                <a href="https://drive.google.com/drive/folders/1BZ2618b5VD0hNQ5AvFNqWqXlxR9IJxsx?usp=sharing" class="btn btn-primary">Template</a>
+              </div>
+              </div>
             </div>
             <div class="card-body">
               <div class="table-responsive">
