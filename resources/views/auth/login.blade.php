@@ -19,21 +19,24 @@
       <div class="d-flex flex-wrap align-items-stretch">
         <div class="col-lg-4 col-md-6 col-12 order-lg-1 min-vh-100 order-2 bg-white">
           <div class="p-4 m-3">
-            <img src="{{ asset("assets/img/stisla-fill.svg")}}" alt="logo" width="80" class="shadow-light rounded-circle mb-5 mt-2">
+            <img src="{{ asset("assets/logo.png")}}" alt="logo" width="100" class="shadow-light mb-5 mt-2">
             <form method="POST" action="{{ url("/login") }}" novalidate="">
               <div class="form-group">
                 <label for="no_thl">No. THL</label>
-                <input id="no_thl" type="text" class="form-control" name="no_thl" tabindex="1" autocomplete="off" required>
-                <div class="invalid-feedback">
-                  NIP
-                </div>
+                <input id="no_thl" type="text" class="form-control @error('no_thl') is-invalid @enderror" name="no_thl" tabindex="1" autocomplete="off" required value="{{ old("no_thl") }}">
+                @error('no_thl')
+                  
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
               </div>
 
               <div class="form-group">
                 <div class="d-block">
                   <label for="password" class="control-label">Password</label>
                 </div>
-                <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" tabindex="2" required>
                 <div class="invalid-feedback">
                   please fill in your password
                 </div>
@@ -48,14 +51,6 @@
 
             </form>
 
-            <div class="text-center mt-5 text-small">
-              Copyright &copy; 💙 by Stisla
-              <div class="mt-2">
-                <a href="#">Privacy Policy</a>
-                <div class="bullet"></div>
-                <a href="#">Terms of Service</a>
-              </div>
-            </div>
           </div>
         </div>
         <div class="col-lg-8 col-12 order-lg-2 order-1 min-vh-100 background-walk-y position-relative overlay-gradient-bottom" data-background="../assets/img/unsplash/login-bg.jpg">
@@ -65,7 +60,6 @@
                 <h1 class="mb-2 display-4 font-weight-bold">Good Morning</h1>
                 <h5 class="font-weight-normal text-muted-transparent">Jepara, Jawa Tengah</h5>
               </div>
-              Photo by <a class="text-light bb" target="_blank" href="https://unsplash.com/photos/a8lTjWJJgLA">Justin Kauffman</a> on <a class="text-light bb" target="_blank" href="https://unsplash.com">Unsplash</a>
             </div>
           </div>
         </div>

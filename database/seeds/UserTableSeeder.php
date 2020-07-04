@@ -59,7 +59,9 @@ class UserTableSeeder extends Seeder
                 "status_tenaga"                 => "THL",
                 "unit_kerja"                    => "DLH",
                 "keterangan"                    => ""
-            ]
+            ],
+
+
         ]);
     }
 }

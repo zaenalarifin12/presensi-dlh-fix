@@ -61,19 +61,19 @@ class JadwalTableSeeder extends Seeder
             [
                 "nama_hari"         => "Sabtu",
                 "nama_lain"         => "Saturday",
-                "jam_mulai"         => null,
-                "jam_selesai"       => null,
-                "lembur_mulai"      => null,
-                "lembur_selesai"    => null,
+                "jam_mulai"         => "08:00:00",
+                "jam_selesai"       => "12:00:00",
+                "lembur_mulai"      => "14:00:00",
+                "lembur_selesai"    => "16:00:00",
                 "status"            => 0
             ],
             [
                 "nama_hari"         => "Minggu",
                 "nama_lain"         => "Sunday",
-                "jam_mulai"         => null,
-                "jam_selesai"       => null,
-                "lembur_mulai"      => null,
-                "lembur_selesai"    => null,
+                "jam_mulai"         => "08:00:00",
+                "jam_selesai"       => "12:00:00",
+                "lembur_mulai"      => "14:00:00",
+                "lembur_selesai"    => "16:00:00",
                 "status"            => 0
             ],
         ]);

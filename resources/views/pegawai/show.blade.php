@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group col-6">
                             <label for="nip">TMT pengangkatan Pertama</label>
-                            <input disabled id="nip" type="date" class="form-control" value="{{ $pegawai->tmt_pengangkatan_pertama }}">
+                            <input disabled id="nip" type="text" class="form-control" value="{{ \App\Helper\Helper::tgl_indo( date('Y-m-d', strtotime($pegawai->tmt_pengangkatan_pertama)))  }}">
                         </div>
                     </div>
 
@@ -48,7 +48,7 @@
                     <div class="row">
                       <div class="form-group col-6">
                           <label>tanggal lahir</label>
-                          <input disabled type="date" class="form-control" value="{{ $pegawai->tanggal_lahir }}">
+                          <input disabled type="text" class="form-control" value="{{ \App\Helper\Helper::tgl_indo( date('Y-m-d', strtotime($pegawai->tanggal_lahir))) }}">
                       </div>
                       <div class="form-group col-6">
                           <label>tingkat pendidikan terkahir</label>

@@ -3,6 +3,19 @@
 @section('css')
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="{{ asset("assets/daterangepicker.css")}}">
+
+    <style>
+      .img-pre{
+          width: 250px;
+        }
+      @media only screen and (max-width: 800px) {
+        /* For mobile phones: */
+        .img-pre{
+          width: 200px;
+        }
+      }
+    </style>
+    
 @endsection
 
 @section('content')
@@ -28,7 +41,7 @@
               <div class="table-responsive">
                 <table class="table table-striped table-bordered" id="example">
                   <thead>
-                    <th style="width:250px">Gambar</th>
+                    <th class="img-pre">Gambar</th>
                     <th>Name</th>
                     <th>Jabatan</th>
                     <th>NO THL</th>
@@ -66,7 +79,11 @@
             { data : "user.no_thl", name : "user.no_thl"},
             { data : "time"    ,    name : "time"},
             { data : "action"   ,   name : "action" }
-          ]
+          ],
+          "columnDefs": [ {
+            "targets": 5,
+            "orderable": false
+            } ]
         });
     } );
     </script>

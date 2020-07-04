@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\User;
+use Illuminate\Support\Facades\File;
 
 class PegawaiController extends Controller
 {
@@ -21,6 +24,14 @@ class PegawaiController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
+        $validateData = $request->validate([
+            "no_thl"                        => "required|max:100|unique:users,no_thl",
+            "name"                          => "required|max:255",
+            "password"                      => "required|min:8"
+        ]);
+        
+        
         // validasi
         $user = User::create([
             "no_thl"                        => $request->no_thl,
@@ -101,5 +112,29 @@ class PegawaiController extends Controller
         $user->delete();
 
         return redirect("/pegawai")->with("msg", "Pegawai berhasil di hapus");
+    }
+
+    // ===============  IMPORT USER VIA EXCEL
+    public function import(Request $request)
+    {
+        
+        $this->validate($request, [
+            "file" => "required|mimes:xlsx, xls"
+        ]);
+
+        $file = $request->file('file');
+
+        $nama_file = rand().$file->getClientOriginalName();
+        
+        $file->move("file_pegawai", $nama_file);
+        $import = new UsersImport;
+        Excel::import($import, public_path("/file_pegawai/". $nama_file));
+
+        $image_path = public_path() . "/file_pegawai/$nama_file";
+        File::delete($image_path);
+
+        return redirect("/pegawai")
+            ->with("msg", "Data pegawai " . $import->getCountSuccessImport() . " berhasil di import")
+            ->with("err", "Data pegawai " . $import->getCountFailImport() . " sudah ada didaftar");;
     }
 }

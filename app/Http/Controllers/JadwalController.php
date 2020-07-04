@@ -31,7 +31,7 @@ class JadwalController extends Controller
             "status"            => ($request->status == "on") ? 1 : 0,
         ]);
         
-        return redirect("/jadwal")->with("msg", "jadwal $jadwal->nama_hari telah di edit");
+        return redirect("/jadwal")->with("msg", "jadwal hari $jadwal->nama_hari telah di edit");
     }
 
     
