@@ -8,3 +8,6 @@ nama kepala harus dinamis
 nama dinas harus dinamis
 
 alur program buat kepala
+
+===================
+edit pegawai
