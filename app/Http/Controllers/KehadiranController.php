@@ -23,7 +23,7 @@ class KehadiranController extends Controller
         $selesai    = urlencode($request->selesai);
         $waktu      = urlencode($request->waktu);
 
-        $tugas = User::where("role", "=", 1)->get();
+        $tugas = User::where("role", "=", 1)->distinct()->get("jabatan");
         
         if(!empty($mulai) && !empty($selesai) && !empty($waktu)){
             switch ($request->input("action")) {
@@ -82,11 +82,11 @@ class KehadiranController extends Controller
             $mulai      = date('Y-m-d 00:00:00');
             $selesai    = date('Y-m-d 23:59:59');   
 
-            $user = User::with(["kehadirans" => function($query) use($mulai, $selesai){
-                $query->whereBetween("time", [date($mulai), date($selesai)])->where("status", 0 );
-            }])->where("role", 1)->get();         
+            // $user = User::with(["kehadirans" => function($query) use($mulai, $selesai){
+            //     $query->whereBetween("time", [date($mulai), date($selesai)])->where("status", 0 );
+            // }])->where("role", 1)->get();         
             
-            return view("kehadiran.index", compact(["user", "tugas", "mulai", "selesai"]));
+            return view("kehadiran.index", compact(["tugas", "mulai", "selesai"]));
         }
         
     }

@@ -90,6 +90,7 @@
             </div>
         </div>
 
+      @if (isset($user))
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -153,7 +154,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>    
+      @endif
+      
     </div>
   </section>
 @endsection

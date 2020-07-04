@@ -13,6 +13,7 @@ use Carbon;
 
 class UsersImport implements ToCollection, WithHeadingRow
 {
+
     /**
     * @param array $row
     *
@@ -39,6 +40,20 @@ class UsersImport implements ToCollection, WithHeadingRow
     }
     */
 
+
+    // for count success import and fail import
+    private $successImport = 0;
+    private $failImport = 0;
+    public function getCountSuccessImport()
+    {
+        return $this->successImport;
+    }
+
+    public function getCountFailImport()
+    {
+        return $this->failImport;
+    }
+
     public function collection(Collection $rows)
     {
         
@@ -56,11 +71,12 @@ class UsersImport implements ToCollection, WithHeadingRow
         
         foreach ($rows as $row) {
             
-            $user = User::where("no_thl", $row["no_thl"])->first();
+            $user = User::withTrashed()->where("no_thl", $row["no_thl"])->first();
             if($user == null){
+
                 User::create([
                     'no_thl'                        => $row["no_thl"],
-                    'name'                          => $row['name'],
+                    'name'                          => strtoupper($row['name']),
                     'password'                      => Hash::make($row["password"]),
                     'role'                          => 1,
                     'tmt_pengangkatan_pertama'      => $this->change_format_date($row["tmt_pengangkatan_pertama"]),
@@ -73,6 +89,9 @@ class UsersImport implements ToCollection, WithHeadingRow
                     'unit_kerja'                    => $row["unit_kerja"],
                     'keterangan'                    => $row["keterangan"],
                 ]);
+                $this->successImport += 1;
+            }else{
+                $this->failImport += 1;
             }
         }
     }

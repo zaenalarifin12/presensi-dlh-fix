@@ -7,6 +7,7 @@ use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 
 class PegawaiController extends Controller
 {
@@ -23,6 +24,14 @@ class PegawaiController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
+        $validateData = $request->validate([
+            "no_thl"                        => "required|max:100",
+            "name"                          => "required|max:255",
+            "password"                      => "required|min:8"
+        ]);
+        
+        
         // validasi
         $user = User::create([
             "no_thl"                        => $request->no_thl,
@@ -118,9 +127,14 @@ class PegawaiController extends Controller
         $nama_file = rand().$file->getClientOriginalName();
         
         $file->move("file_pegawai", $nama_file);
-        
-        Excel::import(new UsersImport, public_path("/file_pegawai/". $nama_file));
-        
-        return redirect("/pegawai")->with("msg", "Data pegawai berhasil di import");
+        $import = new UsersImport;
+        Excel::import($import, public_path("/file_pegawai/". $nama_file));
+
+        $image_path = public_path() . "/file_pegawai/$nama_file";
+        File::delete($image_path);
+
+        return redirect("/pegawai")
+            ->with("msg", "Data pegawai " . $import->getCountSuccessImport() . " berhasil di import")
+            ->with("err", "Data pegawai " . $import->getCountFailImport() . " sudah ada didaftar");;
     }
 }
