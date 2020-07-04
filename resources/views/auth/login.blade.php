@@ -25,6 +25,7 @@
                 <label for="no_thl">No. THL</label>
                 <input id="no_thl" type="text" class="form-control @error('no_thl') is-invalid @enderror" name="no_thl" tabindex="1" autocomplete="off" required value="{{ old("no_thl") }}">
                 @error('no_thl')
+                  
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

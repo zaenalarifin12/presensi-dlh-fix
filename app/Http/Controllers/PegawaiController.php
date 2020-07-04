@@ -26,7 +26,7 @@ class PegawaiController extends Controller
     {
         // dd($request->all());
         $validateData = $request->validate([
-            "no_thl"                        => "required|max:100",
+            "no_thl"                        => "required|max:100|unique:users,no_thl",
             "name"                          => "required|max:255",
             "password"                      => "required|min:8"
         ]);
