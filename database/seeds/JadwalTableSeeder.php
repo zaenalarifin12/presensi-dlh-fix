@@ -12,8 +12,8 @@ class JadwalTableSeeder extends Seeder
      */
     public function run()
     {
-        $jadwal = DB::table("jadwals")->get();
-        if(count($jadwal) > 0 ){
+        $jadwal = DB::table("jadwals")->count();
+        if($jadwal > 0 ){
 
             DB::table("jadwals")->insert([
                 [
