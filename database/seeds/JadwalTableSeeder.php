@@ -12,7 +12,6 @@ class JadwalTableSeeder extends Seeder
      */
     public function run()
     {
-
             DB::table("jadwals")->insert([
                 [
                     "nama_hari"         => "Senin",
