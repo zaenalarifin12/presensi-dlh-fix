@@ -24,7 +24,6 @@ class PegawaiController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $validateData = $request->validate([
             "no_thl"                        => "required|max:100|unique:users,no_thl",
             "name"                          => "required|max:255",
@@ -36,15 +35,15 @@ class PegawaiController extends Controller
         $user = User::create([
             "no_thl"                        => $request->no_thl,
             "tmt_pengangkatan_pertama"      => $request->tmt_pengangkatan_pertama,
-            "name"                          => $request->name,
-            "tempat_lahir"                  => $request->tempat_lahir,
+            "name"                          => strtoupper($request->name),
+            "tempat_lahir"                  => strtoupper($request->tempat_lahir),
             "tanggal_lahir"                 => $request->tanggal_lahir,
-            "tingkat_pendidikan_terakhir"   => $request->tingkat_pendidikan_terakhir,
-            "jurusan_pendidikan_terakhir"   => $request->jurusan_pendidikan_terakhir,
-            "jabatan"                       => $request->jabatan,
-            "status_tenaga"                 => $request->status_tenaga,
-            "unit_kerja"                    => $request->unit_kerja,
-            "keterangan"                    => $request->keterangan,
+            "tingkat_pendidikan_terakhir"   => strtoupper($request->tingkat_pendidikan_terakhir),
+            "jurusan_pendidikan_terakhir"   => strtoupper($request->jurusan_pendidikan_terakhir),
+            "jabatan"                       => strtoupper($request->jabatan),
+            "status_tenaga"                 => strtoupper($request->status_tenaga),
+            "unit_kerja"                    => strtoupper($request->unit_kerja),
+            "keterangan"                    => strtoupper($request->keterangan),
             "password"                      => Hash::make($request->password),
         ]);
 
@@ -67,6 +66,12 @@ class PegawaiController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validateData = $request->validate([
+            "no_thl"                        => "required|max:100",
+            "name"                          => "required|max:255",
+            "password"                      => "min:8|nullable|confirmed"
+        ]);
+
         $user = User::findOrFail($id);
 
         if(empty($user)) abort(404);
@@ -76,34 +81,34 @@ class PegawaiController extends Controller
             $user->update([
                 "no_thl"                        => $request->no_thl,
                 "tmt_pengangkatan_pertama"      => $request->tmt_pengangkatan_pertama,
-                "name"                          => $request->name,
-                "tempat_lahir"                  => $request->tempat_lahir,
+                "name"                          => strtoupper($request->name),
+                "tempat_lahir"                  => strtoupper($request->tempat_lahir),
                 "tanggal_lahir"                 => $request->tanggal_lahir,
-                "tingkat_pendidikan_terakhir"   => $request->tingkat_pendidikan_terakhir,
-                "jurusan_pendidikan_terakhir"   => $request->jurusan_pendidikan_terakhir,
-                "jabatan"                       => $request->jabatan,
-                "status_tenaga"                 => $request->status_tenaga,
-                "unit_kerja"                    => $request->unit_kerja,
-                "keterangan"                    => $request->keterangan,
+                "tingkat_pendidikan_terakhir"   => strtoupper($request->tingkat_pendidikan_terakhir),
+                "jurusan_pendidikan_terakhir"   => strtoupper($request->jurusan_pendidikan_terakhir),
+                "jabatan"                       => strtoupper($request->jabatan),
+                "status_tenaga"                 => strtoupper($request->status_tenaga),
+                "unit_kerja"                    => strtoupper($request->unit_kerja),
+                "keterangan"                    => strtoupper($request->keterangan),
                 "password"                      => Hash::make($request->password)
             ]);
         }else{
             $user->update([
                 "no_thl"                        => $request->no_thl,
                 "tmt_pengangkatan_pertama"      => $request->tmt_pengangkatan_pertama,
-                "name"                          => $request->name,
-                "tempat_lahir"                  => $request->tempat_lahir,
+                "name"                          => strtoupper($request->name),
+                "tempat_lahir"                  => strtoupper($request->tempat_lahir),
                 "tanggal_lahir"                 => $request->tanggal_lahir,
-                "tingkat_pendidikan_terakhir"   => $request->tingkat_pendidikan_terakhir,
-                "jurusan_pendidikan_terakhir"   => $request->jurusan_pendidikan_terakhir,
-                "jabatan"                       => $request->jabatan,
-                "status_tenaga"                 => $request->status_tenaga,
-                "unit_kerja"                    => $request->unit_kerja,
-                "keterangan"                    => $request->keterangan
+                "tingkat_pendidikan_terakhir"   => strtoupper($request->tingkat_pendidikan_terakhir),
+                "jurusan_pendidikan_terakhir"   => strtoupper($request->jurusan_pendidikan_terakhir),
+                "jabatan"                       => strtoupper($request->jabatan),
+                "status_tenaga"                 => strtoupper($request->status_tenaga),
+                "unit_kerja"                    => strtoupper($request->unit_kerja),
+                "keterangan"                    => strtoupper($request->keterangan)
             ]);
         }
         
-        return redirect("/pegawai")->with("msg", $request->nama . " sudah terupdate");
+        return redirect("/pegawai")->with("msg", $user->name . " sudah terupdate");
     }
 
     public function destroy($id)

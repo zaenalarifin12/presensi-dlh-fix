@@ -7,7 +7,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-      <h1>Buat Akun Pegawai</h1>
+      <h1>Edit Akun Pegawai</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
         <div class="breadcrumb-item"><a href="#">Modules</a></div>
@@ -26,19 +26,34 @@
               <form method="POST" action="{{ url("pegawai/$user->id") }}">
                 <div class="row">
                     <div class="form-group col-6">
-                        <label for="nama">No THL berdasarkan TMT</label>
-                        <input id="nama" type="text" class="form-control" name="no_thl" value="{{ old("no_thl") ? old("no_thl") : $user->no_thl }}">
+                        <label>No THL berdasarkan TMT</label>
+                        <input type="text" class="form-control @error('no_thl') is-invalid @enderror" name="no_thl" value="{{ old("no_thl") ? old("no_thl") : $user->no_thl }}">
+                        @error("no_thl")
+                            <div class="invalid-feedback"> 
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="form-group col-6">
-                        <label for="nip">TMT pengangkatan Pertama</label>
-                        <input id="nip" type="date" class="form-control" name="tmt_pengangkatan_pertama" value="{{ old("tmt_pengangkatan_pertama") ? old("tmt_pengangkatan_pertama") : $user->tmt_pengangkatan_pertama }}">
+                        <label>TMT pengangkatan Pertama</label>
+                        <input type="date" class="form-control" name="tmt_pengangkatan_pertama" value="{{ old("tmt_pengangkatan_pertama") ? old("tmt_pengangkatan_pertama") : $user->tmt_pengangkatan_pertama }}">
+                        @error("tmt_pengangkatan_pertama")
+                            <div class="invalid-feedback"> 
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
 
                 <div class="row">
                   <div class="form-group col-6">
                       <label>Nama</label>
-                      <input type="text" class="form-control" name="name" value="{{ old("name") ? old("name") : $user->name }}">
+                      <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old("name") ? old("name") : $user->name }}">
+                      @error("name")
+                            <div class="invalid-feedback"> 
+                                {{ $message }}
+                            </div>
+                        @enderror
                   </div>
                   <div class="form-group col-6">
                       <label>Tempat lahir</label>
@@ -92,7 +107,12 @@
                 <div class="row">
                   <div class="form-group col-12">
                       <label>Password <span class="text-info">Diisi kalau mau ngedit</span></label>
-                      <input type="password" class="form-control" name="password">
+                      <input type="password" class="form-control @error('password') is-invalid @enderror" name="password">
+                      @error("password")
+                          <div class="invalid-feedback"> 
+                              {{ $message }}
+                          </div>
+                      @enderror
                   </div>
                 </div>
                 @csrf
