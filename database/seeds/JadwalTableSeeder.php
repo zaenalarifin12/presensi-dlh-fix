@@ -12,8 +12,6 @@ class JadwalTableSeeder extends Seeder
      */
     public function run()
     {
-        $jadwal = DB::table("jadwals")->count();
-        if($jadwal = 0 ){
 
             DB::table("jadwals")->insert([
                 [
@@ -80,6 +78,6 @@ class JadwalTableSeeder extends Seeder
                     "status"            => 0
                 ],
             ]);
-        }
+        
     }
 }
